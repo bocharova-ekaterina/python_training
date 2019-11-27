@@ -6,8 +6,9 @@ from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest, time, re
+from client import Client
 
-class Client(unittest.TestCase):
+class AddClient(unittest.TestCase):
     def setUp(self):
         self.wd = webdriver.Firefox()
         self.wd.implicitly_wait(30)
@@ -18,8 +19,9 @@ class Client(unittest.TestCase):
     def test_client(self):
         wd = self.wd
         self.login(wd, "admin", "secret")
-        self.add_client(wd, "Bocharova", "Ekaterina", "Shumakova, 23a", "123456", "987654321", "456123",
-                        "user1@mail.ru", "user2@mail.ru")
+        self.add_client(wd, Client(firstname="Bocharova", lastname="Ekaterina", address="Shumakova, 23a",
+                                      home_phone="123456", mobile_phone="987654321", work_phone="456123",
+                                      email_1="user1@mail.ru", email_2="user2@mail.ru"))
         self.return_to_home_page(wd)
         self.logout(wd)
 
@@ -29,32 +31,32 @@ class Client(unittest.TestCase):
     def return_to_home_page(self, wd):
         wd.find_element_by_link_text("home").click()
 
-    def add_client(self, wd, firstname, lastname, address, home_phone, mobile_phone, work_phone, email_1, email_2):
+    def add_client(self, wd, client):
         wd.find_element_by_link_text("add new").click()
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys("%s" % firstname)
+        wd.find_element_by_name("firstname").send_keys("%s" % client.firstname)
         wd.find_element_by_name("lastname").click()
         wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys("%s" % lastname)
+        wd.find_element_by_name("lastname").send_keys("%s" % client.lastname)
         wd.find_element_by_name("address").click()
         wd.find_element_by_name("address").clear()
-        wd.find_element_by_name("address").send_keys("%s" % address)
+        wd.find_element_by_name("address").send_keys("%s" % client.address)
         wd.find_element_by_name("home").click()
         wd.find_element_by_name("home").clear()
-        wd.find_element_by_name("home").send_keys("%s" % home_phone)
+        wd.find_element_by_name("home").send_keys("%s" % client.home_phone)
         wd.find_element_by_name("mobile").click()
         wd.find_element_by_name("mobile").clear()
-        wd.find_element_by_name("mobile").send_keys("%s" % mobile_phone)
+        wd.find_element_by_name("mobile").send_keys("%s" % client.mobile_phone)
         wd.find_element_by_name("work").click()
         wd.find_element_by_name("work").clear()
-        wd.find_element_by_name("work").send_keys("%s" % work_phone)
+        wd.find_element_by_name("work").send_keys("%s" % client.work_phone)
         wd.find_element_by_name("email").click()
         wd.find_element_by_name("email").clear()
-        wd.find_element_by_name("email").send_keys("%s" % email_1)
+        wd.find_element_by_name("email").send_keys("%s" % client.email_1)
         wd.find_element_by_name("email2").click()
         wd.find_element_by_name("email2").clear()
-        wd.find_element_by_name("email2").send_keys("%s" % email_2)
+        wd.find_element_by_name("email2").send_keys("%s" % client.email_2)
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
 
     def login(self, wd, user_name, password):
