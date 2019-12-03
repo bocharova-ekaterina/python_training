@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from client import Client
-from fixture import Application
+from models.client import Client
+from fixture.fixture import Application
 import pytest
 
 
