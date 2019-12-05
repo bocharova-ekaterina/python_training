@@ -38,3 +38,17 @@ class ClientHelper:
         wd.find_element_by_id("MassCB").click()
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to_alert().accept()
+
+    def edit_client(self, client):
+        wd = self.app.wd
+        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        wd.find_element_by_name("home").click()
+        wd.find_element_by_name("home").clear()
+        wd.find_element_by_name("home").send_keys("%s" % client.home_phone)
+        wd.find_element_by_name("mobile").click()
+        wd.find_element_by_name("mobile").clear()
+        wd.find_element_by_name("mobile").send_keys("%s" % client.mobile_phone)
+        wd.find_element_by_name("work").click()
+        wd.find_element_by_name("work").clear()
+        wd.find_element_by_name("work").send_keys("%s" % client.work_phone)
+        wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
