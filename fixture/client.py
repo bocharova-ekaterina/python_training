@@ -1,3 +1,4 @@
+import time
 class ClientHelper:
 
     def __init__(self, app):
@@ -31,3 +32,9 @@ class ClientHelper:
         wd.find_element_by_name("email2").clear()
         wd.find_element_by_name("email2").send_keys("%s" % client.email_2)
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
+
+    def del_all_clients(self):
+        wd = self.app.wd
+        wd.find_element_by_id("MassCB").click()
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
+        wd.switch_to_alert().accept()

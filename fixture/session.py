@@ -5,6 +5,7 @@ class SessionHelper:
 
     def login(self, user_name, user_password):
         wd = self.app.wd
+        self.app.open_home_page()
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").click()
@@ -20,5 +21,7 @@ class SessionHelper:
     def logout(self):
         wd = self.app.wd
         wd.find_element_by_link_text("Logout").click()
+        wd.find_element_by_name("user")
+
 
 
