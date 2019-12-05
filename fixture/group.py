@@ -1,6 +1,7 @@
 class GroupHelper:
+
     def __init__(self, app):
-        self.app=app
+        self.app = app
 
     def create(self, group):
         wd = self.app.wd
