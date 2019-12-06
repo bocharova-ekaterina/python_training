@@ -1,11 +1,11 @@
 class Client:
 
-    def __init__(self,firstname, lastname, address, home_phone, mobile_phone, work_phone, email_1, email_2):
+    def __init__(self,firstname=None, lastname=None, address=None, home=None, mobile=None, work=None, email1=None, email2=None):
         self.firstname=firstname
         self.lastname=lastname
         self.address=address
-        self.home_phone=home_phone
-        self.mobile_phone=mobile_phone
-        self.work_phone=work_phone
-        self.email_1=email_1
-        self.email_2=email_2
+        self.home=home
+        self.mobile=mobile
+        self.work=work
+        self.email1=email1
+        self.email2=email2

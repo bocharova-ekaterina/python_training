@@ -7,31 +7,26 @@ class ClientHelper:
     def add_client(self, client):
         wd = self.app.wd
         wd.find_element_by_link_text("add new").click()
-        wd.find_element_by_name("firstname").click()
-        wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys("%s" % client.firstname)
-        wd.find_element_by_name("lastname").click()
-        wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys("%s" % client.lastname)
-        wd.find_element_by_name("address").click()
-        wd.find_element_by_name("address").clear()
-        wd.find_element_by_name("address").send_keys("%s" % client.address)
-        wd.find_element_by_name("home").click()
-        wd.find_element_by_name("home").clear()
-        wd.find_element_by_name("home").send_keys("%s" % client.home_phone)
-        wd.find_element_by_name("mobile").click()
-        wd.find_element_by_name("mobile").clear()
-        wd.find_element_by_name("mobile").send_keys("%s" % client.mobile_phone)
-        wd.find_element_by_name("work").click()
-        wd.find_element_by_name("work").clear()
-        wd.find_element_by_name("work").send_keys("%s" % client.work_phone)
-        wd.find_element_by_name("email").click()
-        wd.find_element_by_name("email").clear()
-        wd.find_element_by_name("email").send_keys("%s" % client.email_1)
-        wd.find_element_by_name("email2").click()
-        wd.find_element_by_name("email2").clear()
-        wd.find_element_by_name("email2").send_keys("%s" % client.email_2)
+        self.fill_client_form(client)
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
+
+    def fill_client_form(self, client):
+        wd = self.app.wd
+        self.change_field_value("firstname", client.firstname)
+        self.change_field_value("lastname", client.lastname)
+        self.change_field_value("address", client.address)
+        self.change_field_value("home", client.home)
+        self.change_field_value("mobile", client.mobile)
+        self.change_field_value("work", client.work)
+        self.change_field_value("email1", client.email1)
+        self.change_field_value("email2", client.email2)
+
+    def change_field_value(self, field_name, text):
+        wd = self.app.wd
+        if text is not None:
+            wd.find_element_by_name(field_name).click()
+            wd.find_element_by_name(field_name).clear()
+            wd.find_element_by_name(field_name).send_keys(text)
 
     def del_first_clients(self):
         wd = self.app.wd
@@ -40,16 +35,8 @@ class ClientHelper:
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to_alert().accept()
 
-    def edit_client(self, client):
+    def edit_client(self, new_client_data):
         wd = self.app.wd
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
-        wd.find_element_by_name("home").click()
-        wd.find_element_by_name("home").clear()
-        wd.find_element_by_name("home").send_keys("%s" % client.home_phone)
-        wd.find_element_by_name("mobile").click()
-        wd.find_element_by_name("mobile").clear()
-        wd.find_element_by_name("mobile").send_keys("%s" % client.mobile_phone)
-        wd.find_element_by_name("work").click()
-        wd.find_element_by_name("work").clear()
-        wd.find_element_by_name("work").send_keys("%s" % client.work_phone)
+        self.fill_client_form(new_client_data)
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
