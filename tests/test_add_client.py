@@ -3,9 +3,7 @@ from model.client import Client
 
 
 def test_client(app):
-    app.session.login(user_name="admin", user_password="secret")
-    app.client.add_client(Client(firstname="Bocharova", lastname="Ekaterina", address="Shumakova, 23a",
-                                      home_phone="123456", mobile_phone="987654321", work_phone="456123",
-                                      email_1="user1@mail.ru", email_2="user2@mail.ru"))
-    app.session.logout()
+    app.client.add_client(Client(firstname="Ekaterina", lastname="Bocharova", address="Shumakova, 23a",
+                                      home="123456", mobile="987654321", work="456123", email1="user@mail.ru", email2="u@mail.ru"))
+
 
