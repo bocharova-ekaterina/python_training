@@ -18,7 +18,7 @@ class ClientHelper:
         self.change_field_value("home", client.home)
         self.change_field_value("mobile", client.mobile)
         self.change_field_value("work", client.work)
-        self.change_field_value("email1", client.email1)
+        self.change_field_value("email", client.email)
         self.change_field_value("email2", client.email2)
 
     def change_field_value(self, field_name, text):
