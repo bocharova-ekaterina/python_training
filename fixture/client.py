@@ -44,6 +44,7 @@ class ClientHelper:
 
     def count(self):
         wd = self.app.wd
-        return len(wd.find_elements_by_name("selected[]"))
+        wd.get("http://localhost/addressbook/")
+        return len(wd.find_element_by_name("selected[]"))
 
 
