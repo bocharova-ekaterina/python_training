@@ -1,5 +1,4 @@
 
-
 class ClientHelper:
 
     def __init__(self, app):
@@ -10,7 +9,7 @@ class ClientHelper:
         wd.find_element_by_link_text("add new").click()
         self.fill_client_form(client)
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
-        wd.get("http://localhost/addressbook/")
+        self.app.open_home_page()
 
     def fill_client_form(self, client):
         wd = self.app.wd
@@ -44,6 +43,7 @@ class ClientHelper:
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
 
     def count(self):
+        self.app.open_home_page()
         wd = self.app.wd
         return len(wd.find_elements_by_name("selected[]"))
 

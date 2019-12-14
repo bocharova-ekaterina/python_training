@@ -7,3 +7,4 @@ def test_del_client(app):
                                       home="123456", mobile="987654321", work="456123", email="user1@mail.ru", email2="user2@mail.ru"))
     app.client.del_first_clients()
 
+
