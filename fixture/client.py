@@ -1,3 +1,5 @@
+from model.client import Client
+
 
 class ClientHelper:
 
@@ -43,8 +45,19 @@ class ClientHelper:
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
 
     def count(self):
-        self.app.open_home_page()
         wd = self.app.wd
+        self.app.open_home_page()
         return len(wd.find_elements_by_name("selected[]"))
+
+    def get_client_list(self):
+        wd = self.app.wd
+        self.app.open_home_page()
+        clients = []
+        for element in wd.find_elements_by_css_selector("tr[name=entry]"):
+            text = element.find_elements_by_css_selector("td")
+            id = element.find_element_by_name("selected[]").get_attribute("value")
+            clients.append(Client(id=id, firstname=text, lastname=text))
+        return clients
+
 
 
