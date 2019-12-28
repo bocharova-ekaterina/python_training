@@ -9,7 +9,7 @@ def test_client(app):
     if app.client.count() == 0:
         app.client.add_client()
     app.client.edit_client(Client(firstname="Irina"))
+    assert len(old_clients) == app.client.count()
     new_clients = app.client.get_client_list()
-    assert len(old_clients) == len(new_clients)
     old_clients[0] = client
     assert sorted(old_clients, key=Client.id_or_max) == sorted(new_clients, key=Client.id_or_max)

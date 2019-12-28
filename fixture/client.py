@@ -3,6 +3,8 @@ from model.client import Client
 
 class ClientHelper:
 
+    client_cache = None
+
     def __init__(self, app):
         self.app = app
 
@@ -12,6 +14,7 @@ class ClientHelper:
         self.fill_client_form(client)
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
         self.app.open_home_page()
+        self.client_cache = None
 
     def fill_client_form(self, client):
         wd = self.app.wd
@@ -37,12 +40,14 @@ class ClientHelper:
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to_alert().accept()
+        self.client_cache = None
 
     def edit_client(self, new_client_data):
         wd = self.app.wd
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         self.fill_client_form(new_client_data)
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
+        self.client_cache = None
 
     def count(self):
         wd = self.app.wd
@@ -50,15 +55,16 @@ class ClientHelper:
         return len(wd.find_elements_by_name("selected[]"))
 
     def get_client_list(self):
-        wd = self.app.wd
-        self.app.open_home_page()
-        clients = []
-        for element in wd.find_elements_by_css_selector("tr[name=entry]"):
-            text = element.find_elements_by_css_selector("td")
-            id = element.find_element_by_name("selected[]").get_attribute("value")
-            lastname = text
-            firtname = text
-            lastname = element.find_elements_by_tag_name("td")[1].text
-            firtname = element.find_elements_by_tag_name("td")[2].text
-            clients.append(Client(id=id, firstname=firtname, lastname=lastname))
-        return clients
+        if self.client_cache is None:
+            wd = self.app.wd
+            self.app.open_home_page()
+            self.client_cache = []
+            for element in wd.find_elements_by_css_selector("tr[name=entry]"):
+                text = element.find_elements_by_css_selector("td")
+                id = element.find_element_by_name("selected[]").get_attribute("value")
+                lastname = text
+                firtname = text
+                lastname = element.find_elements_by_tag_name("td")[1].text
+                firtname = element.find_elements_by_tag_name("td")[2].text
+                self.client_cache.append(Client(id=id, firstname=firtname, lastname=lastname))
+            return list(self.client_cache)
