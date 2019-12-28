@@ -56,8 +56,9 @@ class ClientHelper:
         for element in wd.find_elements_by_css_selector("tr[name=entry]"):
             text = element.find_elements_by_css_selector("td")
             id = element.find_element_by_name("selected[]").get_attribute("value")
-            clients.append(Client(id=id, firstname=text, lastname=text))
+            lastname = text
+            firtname = text
+            lastname = element.find_elements_by_tag_name("td")[1].text
+            firtname = element.find_elements_by_tag_name("td")[2].text
+            clients.append(Client(id=id, firstname=firtname, lastname=lastname))
         return clients
-
-
-
