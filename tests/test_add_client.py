@@ -5,7 +5,7 @@ from model.client import Client
 def test_client(app):
     old_clients = app.client.get_client_list()
     client = Client(firstname="Ekaterina", lastname="Bocharova", address="Shumakova, 23a",
-                                      home="123456", mobile="987654321", work="456123", email="user1@mail.ru", email2="user2@mail.ru")
+                                      homephone="123456", mobilephone="987654321", workphone="456123", email="user1@mail.ru", email2="user2@mail.ru")
     app.client.add_client(client)
     assert len(old_clients) + 1 == app.client.count()
     new_clients = app.client.get_client_list()
