@@ -1,13 +1,7 @@
 # -*- coding: utf-8 -*-
 from model.client import Client
-import string
-import random
+from generator.client import testdata
 import pytest
-
-
-def random_string(prefix, maxlen):
-    symbols = string.ascii_letters + string.digits + " " * 10 + string.punctuation
-    return prefix + " ".join([random.choice(symbols) for i in range (random.randrange(maxlen))])
 
 
 #testdata=[
@@ -20,12 +14,6 @@ def random_string(prefix, maxlen):
         #for work in [" ", random_string("work", 10)]
         #for email in [" ", random_string("email", 20)]
         #for email2 in [" ", random_string("email2", 20)]]
-
-testdata = [Client(firstname="", lastname="", address="", home="", mobile="", work="", email="",email2="", email3="")] +[
-            Client(firstname=random_string("firstname", 10), lastname=random_string("lastname", 20),
-            home=random_string("home", 10), mobile=random_string("mobile", 10), work=random_string("work", 10),
-            email=random_string("email", 20), email2=random_string("email2", 20), email3=random_string("email3", 20))
-            for i in range(3)]
 
 
 @pytest.mark.parametrize("client", testdata, ids=[repr(x) for x in testdata])
