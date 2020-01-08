@@ -16,9 +16,10 @@ import pytest
         #for email2 in [" ", random_string("email2", 20)]]
 
 
-@pytest.mark.parametrize("client", testdata, ids=[repr(x) for x in testdata])
+#@pytest.mark.parametrize("client", testdata, ids=[repr(x) for x in testdata])
 
-def test_add_client(app, client):
+def test_add_client(app, json_clients):
+    client=json_clients
     old_clients = app.client.get_client_list()
     app.client.add_client(client)
     assert len(old_clients) + 1 == app.client.count()
