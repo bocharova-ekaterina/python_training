@@ -44,6 +44,14 @@ class ClientHelper:
         wd.switch_to_alert().accept()
         self.client_cache = None
 
+    def del_client_by_id(self, id):
+        wd = self.app.wd
+        self.app.open_home_page()
+        self.select_client_by_id(id)
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
+        wd.switch_to_alert().accept()
+        self.client_cache = None
+
     def del_first_clients(self, index):
         wd = self.app.wd
         self.del_clients_by_index(0)
@@ -51,6 +59,10 @@ class ClientHelper:
     def select_client_by_index(self, index):
         wd = self.app.wd
         wd.find_elements_by_name("selected[]")[index].click()
+
+    def select_client_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
 
     def select_client_by_name(self):
         wd = self.app.wd
@@ -60,6 +72,15 @@ class ClientHelper:
         wd = self.app.wd
         self.app.open_home_page()
         wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
+        self.fill_client_form(new_client_data)
+        wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
+        self.client_cache = None
+
+    def edit_client_by_id(self, id, new_client_data):
+        wd = self.app.wd
+        self.app.open_home_page()
+        self.select_client_by_id(id)
+        wd.find_element_by_xpath("//img[@alt='Edit']").click()
         self.fill_client_form(new_client_data)
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
         self.client_cache = None
