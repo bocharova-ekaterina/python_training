@@ -1,5 +1,8 @@
 from random import randrange
 import re
+from fixture.db import dBFixture
+from model.client import Client
+
 
 
 def test_client_phones_from_home_page(app):
@@ -27,6 +30,18 @@ def test_client_data_on_home_page(app):
     assert client_from_home_page_random.address == client_from_edit_page.address
     assert client_from_home_page_random.all_phones_from_home_page == merge_phones_on_home_page(client_from_edit_page)
     assert client_from_home_page_random.all_emails_from_home_page == merge_emails_on_home_page(client_from_edit_page)
+
+
+def test_client_data_on_db(app, db):
+    clients_from_ui = sorted(app.client.get_client_list(), key=Client.id_or_max)
+    clients_from_db = sorted(db.get_client_list(), key=Client.id_or_max)
+    for i,  clients in enumerate(clients_from_ui):
+        client_from_db = clients_from_db[i]
+        assert clients.firstname == client_from_db.firstname
+        assert clients.lastname == client_from_db.lastname
+        assert clients.address == client_from_db.address
+        assert clients.all_phones_from_home_page == merge_phones_on_home_page(client_from_db)
+        assert clients.all_emails_from_home_page == merge_emails_on_home_page(client_from_db)
 
 
 def clear(s):
