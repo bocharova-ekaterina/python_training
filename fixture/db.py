@@ -38,3 +38,15 @@ class dBFixture:
         finally:
             cursor.close()
         return list
+
+    def get_clients_from_group(self, group_id):
+        cursor = self.connection.cursor()
+        list = []
+        try:
+            cursor.execute(
+                "select id, group_id from address_in_groups where group_id=:group_id", {"group_id": group_id})
+            row = cursor.fetchone()
+            list.append(row)
+        finally:
+            cursor.close()
+        return list

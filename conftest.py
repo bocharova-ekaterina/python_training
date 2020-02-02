@@ -49,9 +49,10 @@ def check_ui(request):
 
 @pytest.fixture(scope="session")
 def orm(request):
-    fixture=ORMFixture
+    db_config = load_config(request.config.getoption("--target"))["db"]
+    fixture = ORMFixture(host=db_config["host"], name=db_config["name"], user=db_config["user"], password=db_config["password"])
     def fin():
-        fixture.destroy()
+        pass
     request.addfinalizer(fin)
     return fixture
 

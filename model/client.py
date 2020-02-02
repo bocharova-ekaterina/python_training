@@ -3,9 +3,9 @@ from sys import maxsize
 
 class Client:
 
-    def __init__(self,firstname=None, lastname=None, address=None,
+    def __init__(self, id=None, firstname=None, lastname=None, address=None,
                  home=None, mobile=None, work=None, phone2=None,
-                 email=None, email2=None, email3=None, id=None, all_phones_from_home_page=None,
+                 email=None, email2=None, email3=None, all_phones_from_home_page=None,
                  all_emails_from_home_page=None):
         self.firstname=firstname
         self.lastname=lastname
@@ -25,7 +25,7 @@ class Client:
         return "%s: %s; %s" % (self.id, self.firstname, self.lastname)
 
     def __eq__(self, other):
-        return self.id is None or other.id is None or self.id == other.id and self.lastname == other.lastname
+        return (self.id is None or other.id is None or self.id == other.id) and self.lastname == other.last_name and self.firstname == other.first_name
 
     def id_or_max(self):
         if self.id:
