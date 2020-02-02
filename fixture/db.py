@@ -1,4 +1,4 @@
-import  pymysql.cursors
+import pymysql.cursors
 from model.group import Group
 from model.client import Client
 

@@ -152,3 +152,28 @@ class ClientHelper:
         phone2 = re.search("P: (.*)", text).group(1)
         return Client(home=homephone, work=workphone,  mobile=mobilephone, phone2=phone2)
 
+    def add_client_to_group(self, client_id, group_id):
+        wd = self.app.wd
+        self.app.open_home_page()
+        self.select_client_by_id(client_id)
+        wd.find_element_by_name("to_group").click()
+        self.choice_group_by_id(group_id)
+        wd.find_element_by_name("add").click()
+        self.app.open_home_page()
+
+    def choice_group_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_css_selector("option[value='%s']" % id).click()
+
+    def del_client_from_group(self, client_id, group_id):
+        wd = self.app.wd
+        self.app.open_home_page()
+        wd.find_element_by_css_selector("option[value='%s']" % id).click()
+        self.select_client_by_id(client_id)
+        wd.find_element_by_name("remove").click()
+        self.app.open_home_page()
+
+
+
+
+

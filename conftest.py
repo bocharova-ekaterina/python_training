@@ -1,5 +1,6 @@
 from fixture.application import Application
 from fixture.db import dBFixture
+from fixture.orm import ORMFixture
 import pytest
 import json
 import os.path
@@ -9,6 +10,7 @@ import jsonpickle
 
 fixture = None
 target = None
+
 
 def load_config(file):
     global target
@@ -29,6 +31,7 @@ def app(request):
     fixture.session.ensure_login(user_name=web_config["user_name"], user_password=web_config["user_password"])
     return fixture
 
+
 @pytest.fixture(scope="session")
 def db(request):
     db_config = load_config(request.config.getoption("--target"))["db"]
@@ -38,9 +41,19 @@ def db(request):
     request.addfinalizer(fin)
     return dbfixture
 
+
 @pytest.fixture
 def check_ui(request):
     return request.config.getoption("--check_ui")
+
+
+@pytest.fixture(scope="session")
+def orm(request):
+    fixture=ORMFixture
+    def fin():
+        fixture.destroy()
+    request.addfinalizer(fin)
+    return fixture
 
 
 @pytest.fixture(scope="session", autouse=True)
