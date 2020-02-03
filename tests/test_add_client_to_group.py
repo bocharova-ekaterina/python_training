@@ -11,15 +11,14 @@ def test_add_client_to_group(app, db, orm):
         app.client.add_client(Client(firstname="Ekaterina", lastname="Bocharova", address="Shumakova, 23a"))
     #выбираем рандомную группу
     old_groups = app.group.get_group_list()
-    old_clients = app.client.get_client_list()
     random_group = random.choice(old_groups)
     group_db_id = random_group.id
     #выбираем рандомного клиента не состоящего в группе
     client_at_not_group = orm.get_client_not_in_group(random_group)
     random_client = random.choice(client_at_not_group)
-    old_clients_from_group=db.get_clients_from_group(random_group)
+    old_clients_from_group=db.get_clients_from_group(group_db_id)
     app.client.add_client_to_group(random_client, random_group)
-    new_clients_from_group=db.get_clients_from_group(random_group)
+    new_clients_from_group=db.get_clients_from_group(group_db_id)
     assert len(old_clients_from_group)==len(new_clients_from_group)+1
 
 

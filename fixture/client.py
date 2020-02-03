@@ -158,9 +158,9 @@ class ClientHelper:
         self.select_client_by_id(client_id.id)
         self.select_group_to_add_by_id(group_id.id)
         wd.find_element_by_name("add").click()
-        self.go_to_group_page()
+        self.open_group_page()
 
-    def go_to_group_page(self):
+    def open_group_page(self):
         wd = self.app.wd
         if not (wd.current_url.endswith('/group.php') and len(wd.find_elements_by_name("new")) > 0):
             wd.find_element_by_partial_link_text("group page").click()
@@ -181,6 +181,14 @@ class ClientHelper:
         self.select_client_by_id(client_id)
         wd.find_element_by_name("remove").click()
         self.app.open_home_page()
+
+    def del_client_from_group(self, client_id, group_id):
+        wd = self.app.wd
+        self.app.open_home_page()
+        self.select_group_to_add_by_id(group_id.id)
+        self.select_client_by_id(client_id.id)
+        wd.find_element_by_name("remove").click()
+        self.open_group_page()
 
 
 
