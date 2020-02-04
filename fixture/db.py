@@ -44,7 +44,7 @@ class dBFixture:
         list = []
         try:
             cursor.execute(
-                "select id, group_id from address_in_groups where group_id=?", group_id)
+                "select id, group_id from address_in_groups where group_id=?", str(group_id))
             row = cursor.fetchone()
             list.append(row)
             #for row in cursor:
