@@ -13,8 +13,11 @@ def test_add_client_to_group(app, db, orm):
     old_groups = app.group.get_group_list()
     random_group = random.choice(old_groups)
     group_db_id = random_group.id
-    #выбираем рандомного клиента не состоящего в группе
     client_at_not_group = orm.get_client_not_in_group(random_group)
+    #если все клиенты уже состоят в выбранной группе добавляем нового клиента
+    if len(client_at_not_group)==0:
+        app.client.add_client(Client(firstname="Ekaterina", lastname="Bocharova", address="Shumakova, 23a"))
+    # выбираем клиента из тех, которые еще не состоят в выбранной группе
     random_client = random.choice(client_at_not_group)
     old_clients_from_group=orm.get_client_in_group(group_db_id)
     app.client.add_client_to_group(random_client, random_group)
